@@ -5,13 +5,15 @@ import java.awt.*;
 
 public class Header {
     private final JPanel mainPanel;
-    private final FlowLayout flowLayout;
     private final JComboBox<String> searchBar;
     private final JButton runButton;
+    private final FlowLayout layout;
+    private final StyleGuide style;
 
-    public Header(Dimension size) {
-        flowLayout = new FlowLayout(FlowLayout.CENTER);
+    public Header(Dimension size, StyleGuide style) {
+        this.style = style;
 
+        layout = new FlowLayout(FlowLayout.CENTER);
         runButton = generateRunButton();
         searchBar = generateSearchBar();
 
@@ -33,9 +35,9 @@ public class Header {
         // TODO: Change to use style guide class
         button.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createEmptyBorder(0,0,0,0),
-                BorderFactory.createLineBorder(Color.lightGray, 2)
+                BorderFactory.createLineBorder(style.getBorderColor(), 2)
         ));
-        button.setBackground(new Color(255,255,255));
+        button.setBackground(style.getWhite());
 
         return button;
     }
@@ -44,7 +46,7 @@ public class Header {
         JComboBox<String> searchBar = new JComboBox<>();
         searchBar.setEditable(true);
         searchBar.setPreferredSize(new Dimension(200, 24));
-        searchBar.setBackground(new Color(255,255,255));
+        searchBar.setBackground(style.getWhite());
         searchBar.setSelectedItem("");
         searchBar.addItem("Testing");
         searchBar.addItem("Another item");
@@ -56,8 +58,8 @@ public class Header {
     private JPanel generateMainPanel(Dimension size) {
         JPanel mainPanel = new JPanel();
         mainPanel.setSize(size);
-        mainPanel.setBackground(new Color(0,122,122));
-        mainPanel.setLayout(flowLayout);
+        mainPanel.setBackground(style.getMainColor());
+        mainPanel.setLayout(this.layout);
         mainPanel.setBorder(BorderFactory.createEmptyBorder(6,0,0,0));
 
         return mainPanel;
