@@ -8,6 +8,9 @@ import java.awt.*;
 public class UnitTester {
     public static void main(String[] args) {
         //TODO: Make sizes dynamic
+        //TODO: Make all classes extend from JPanel
+        //TODO: Add actual layout to window
+        //      Note to self: (top->down border layout? header: north (w/ set height), content: center)
 
         Dimension windowSize = new Dimension(600, 400);
 

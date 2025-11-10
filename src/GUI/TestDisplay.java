@@ -29,7 +29,7 @@ public class TestDisplay {
         icons.addIcon(IconType.ERROR, "/resources/alert-circle.png");
 
         messageBox = new MessageBox(style);
-        testDetailsPanel = new TestDetailsPanel(style);
+        testDetailsPanel = new TestDetailsPanel(icons, style);
 
         mainPanel = generateMainPanel();
 
