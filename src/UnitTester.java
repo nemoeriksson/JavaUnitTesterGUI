@@ -5,8 +5,6 @@ import java.awt.*;
 
 public class UnitTester {
     public static void main(String[] args) {
-        //TODO: Make sizes dynamic
-
         Dimension windowSize = new Dimension(600, 400);
 
         StyleGuide styleGuide = new StyleGuide();

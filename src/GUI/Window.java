@@ -13,9 +13,9 @@ public class Window extends JFrame {
         super(title);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setPreferredSize(size);
         setLocation(200, 200);
-        setResizable(false);
+        setPreferredSize(size);
+        setMinimumSize(size);
 
         header = new Header(new Dimension(size.width, 48), style);
         mainSection = new TestDisplay(style);
