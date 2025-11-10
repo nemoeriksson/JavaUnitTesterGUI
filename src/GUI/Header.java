@@ -3,32 +3,27 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 
-public class Header {
-    private final JPanel mainPanel;
+public class Header extends JPanel {
     private final JComboBox<String> searchBar;
     private final JButton runButton;
     private final FlowLayout layout;
-    private final StyleGuide style;
 
     public Header(Dimension size, StyleGuide style) {
-        this.style = style;
-
         layout = new FlowLayout(FlowLayout.CENTER);
-        runButton = generateRunButton();
-        searchBar = generateSearchBar();
+        runButton = generateRunButton(style);
+        searchBar = generateSearchBar(style);
 
-        mainPanel = generateMainPanel(size);
+        setPreferredSize(size);
+        setBackground(style.getMainColor());
+        setLayout(this.layout);
+        setBorder(BorderFactory.createEmptyBorder(6,0,0,0));
 
-        mainPanel.add(searchBar);
-        mainPanel.add(Box.createHorizontalStrut(120));
-        mainPanel.add(runButton);
+        add(searchBar);
+        add(Box.createHorizontalStrut(120));
+        add(runButton);
     }
 
-    public JPanel getPanel() {
-        return mainPanel;
-    }
-
-    private JButton generateRunButton() {
+    private JButton generateRunButton(StyleGuide style) {
         JButton button = new JButton("Run");
         button.setPreferredSize(new Dimension(64, 24));
 
@@ -42,7 +37,7 @@ public class Header {
         return button;
     }
 
-    private JComboBox<String> generateSearchBar() {
+    private JComboBox<String> generateSearchBar(StyleGuide style) {
         JComboBox<String> searchBar = new JComboBox<>();
         searchBar.setEditable(true);
         searchBar.setPreferredSize(new Dimension(200, 24));
@@ -53,15 +48,5 @@ public class Header {
         ((JTextField)searchBar.getEditor().getEditorComponent()).setBorder(BorderFactory.createEmptyBorder(0,4,0,0));
 
         return searchBar;
-    }
-
-    private JPanel generateMainPanel(Dimension size) {
-        JPanel mainPanel = new JPanel();
-        mainPanel.setSize(size);
-        mainPanel.setBackground(style.getMainColor());
-        mainPanel.setLayout(this.layout);
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(6,0,0,0));
-
-        return mainPanel;
     }
 }

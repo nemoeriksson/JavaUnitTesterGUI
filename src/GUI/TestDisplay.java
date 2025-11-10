@@ -3,13 +3,11 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 
-public class TestDisplay {
-    private final JPanel mainPanel;
-    private final CardLayout layout;
+public class TestDisplay extends JPanel{
+    private final CardLayout layout = new CardLayout();
 
     private final TestDetailsPanel testDetailsPanel;
     private final MessageBox messageBox;
-    private final StyleGuide style;
 
     private final IconSet<IconType> icons = new IconSet<>();
 
@@ -20,39 +18,27 @@ public class TestDisplay {
     // Constructors
 
     public TestDisplay(StyleGuide style) {
-        this.style = style;
-        layout = new CardLayout();
-
         // Set icons
         icons.addIcon(IconType.INFO, "/resources/info-circle.png");
         icons.addIcon(IconType.SUCCESS, "/resources/check-circle.png");
         icons.addIcon(IconType.ERROR, "/resources/alert-circle.png");
 
+        JPanel emptyPanel = new JPanel(); // Viewed by default
         messageBox = new MessageBox(style);
         testDetailsPanel = new TestDetailsPanel(icons, style);
 
-        mainPanel = generateMainPanel();
+        setBackground(style.getWhite());
+        setLayout(this.layout);
 
-        JPanel emptyPanel = new JPanel();
-        mainPanel.add(emptyPanel, "empty");
+        add(emptyPanel, "empty");
+        add(messageBox, "msgpanel");
+        add(testDetailsPanel, "respanel");
 
-        mainPanel.add(messageBox.getPanel(), "msgpanel");
-        mainPanel.add(testDetailsPanel, "respanel");
-
-        layout.show(mainPanel, "respanel");
+        layout.show(this, "respanel");
     }
 
     // Public methods
 
-    public JPanel getPanel() { return mainPanel; }
-
     // Private methods
 
-    private JPanel generateMainPanel() {
-        JPanel panel = new JPanel();
-        panel.setBackground(style.getWhite());
-        panel.setLayout(this.layout);
-
-        return panel;
-    }
 }

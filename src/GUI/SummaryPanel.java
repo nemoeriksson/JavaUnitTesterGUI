@@ -39,7 +39,7 @@ public class SummaryPanel extends JPanel {
         JLabel label = new JLabel(text);
         label.setIcon(icon);
         label.setIconTextGap(8);
-        label.setBorder(BorderFactory.createEmptyBorder(8,0,0,0));
+        label.setBorder(BorderFactory.createEmptyBorder(8,8,4,8));
         return label;
     }
 }

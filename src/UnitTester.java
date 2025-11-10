@@ -8,9 +8,6 @@ import java.awt.*;
 public class UnitTester {
     public static void main(String[] args) {
         //TODO: Make sizes dynamic
-        //TODO: Make all classes extend from JPanel
-        //TODO: Add actual layout to window
-        //      Note to self: (top->down border layout? header: north (w/ set height), content: center)
 
         Dimension windowSize = new Dimension(600, 400);
 
@@ -28,8 +25,11 @@ public class UnitTester {
         Header header = new Header(new Dimension(windowSize.width, 48), styleGuide);
         TestDisplay mainSection = new TestDisplay(styleGuide);
 
-        window.add(header.getPanel());
-        window.add(mainSection.getPanel());
+        BorderLayout layout = new BorderLayout();
+
+        window.setLayout(layout);
+        window.add(header, BorderLayout.NORTH);
+        window.add(mainSection, BorderLayout.CENTER);
         window.pack();
         window.setVisible(true);
     }

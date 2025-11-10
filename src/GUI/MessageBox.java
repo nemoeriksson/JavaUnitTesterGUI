@@ -3,8 +3,7 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 
-public class MessageBox {
-    private final JPanel mainPanel;
+public class MessageBox extends JPanel{
     private final JLabel headerLabel;
     private final JLabel contentLabel;
 
@@ -16,14 +15,11 @@ public class MessageBox {
         containerPanel.add(headerLabel);
         containerPanel.add(contentLabel);
 
-        mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setBackground(style.getWhite());
-        mainPanel.add(containerPanel, new GridBagConstraints());
+        setBackground(style.getWhite());
+        add(containerPanel);
     }
 
     // Public methods
-
-    public JPanel getPanel() { return mainPanel; }
 
     public void setMessage(ImageIcon icon, String headerText, String contentText) {
         headerLabel.setIcon(icon);
