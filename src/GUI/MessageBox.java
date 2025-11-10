@@ -2,26 +2,13 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.net.URL;
 
 public class MessageBox {
     private final JPanel mainPanel;
     private final JLabel headerLabel;
     private final JLabel contentLabel;
 
-    private final ImageIcon infoIcon;
-    private final ImageIcon errorIcon;
-    private final ImageIcon successIcon;
-
-    public enum MessageType {
-        INFO, ERROR, SUCCESS;
-    }
-
     public MessageBox(StyleGuide style) {
-        infoIcon = getImageIcon("/resources/info-circle.png");
-        errorIcon = getImageIcon("/resources/alert-circle.png");
-        successIcon = getImageIcon("/resources/check-circle.png");
-
         headerLabel = generateHeaderLabel();
         contentLabel = generateContentLabel();
         JPanel containerPanel = generateContainerPanel(style);
@@ -30,6 +17,7 @@ public class MessageBox {
         containerPanel.add(contentLabel);
 
         mainPanel = new JPanel(new GridBagLayout());
+        mainPanel.setBackground(style.getWhite());
         mainPanel.add(containerPanel, new GridBagConstraints());
     }
 
@@ -37,29 +25,19 @@ public class MessageBox {
 
     public JPanel getPanel() { return mainPanel; }
 
-    public void setMessage(MessageType type, String headerText, String contentText) {
-        switch (type) {
-            case INFO -> headerLabel.setIcon(infoIcon);
-            case ERROR -> headerLabel.setIcon(errorIcon);
-            case SUCCESS -> headerLabel.setIcon(successIcon);
-        }
+    public void setMessage(ImageIcon icon, String headerText, String contentText) {
+        headerLabel.setIcon(icon);
 
-        // HTML to add line wrapping easily
+        // uses HTML to add line wrapping
         headerLabel.setText(String.format("<html><p>%s</p></html>", headerText));
         contentLabel.setText(String.format("<html><p>%s</p></html>", contentText));
     }
 
     // Private methods
 
-    private ImageIcon getImageIcon(String resourcePath) {
-        URL url = this.getClass().getResource(resourcePath);
-        return new ImageIcon(Toolkit.getDefaultToolkit().getImage(url));
-    }
-
     private JLabel generateHeaderLabel() {
         JLabel label = new JLabel();
-        label.setIcon(infoIcon);
-        label.setIconTextGap(10);
+        label.setIconTextGap(8);
         label.setBorder(BorderFactory.createEmptyBorder(4,12,0,12));
 
         return label;
@@ -75,7 +53,7 @@ public class MessageBox {
     private JPanel generateContainerPanel(StyleGuide style) {
         JPanel panel = new JPanel();
         panel.setPreferredSize(new Dimension(225, 144));
-        panel.setBackground(style.getWhite());
+        panel.setBackground(style.getLightGray());
         panel.setBorder(BorderFactory.createLineBorder(style.getBorderColor(), 2));
 
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));

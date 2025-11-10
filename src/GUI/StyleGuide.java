@@ -5,13 +5,17 @@ import java.awt.*;
 public class StyleGuide {
     private Color mainColor = Color.magenta;
     private Color white = Color.white;
+    private Color lightGray = Color.lightGray;
     private Color borderColor = Color.lightGray;
 
     public void setMainColor(Color c) { mainColor = c; }
     public Color getMainColor() { return mainColor; }
-    
+
     public void setWhite(Color c) { white = c; }
     public Color getWhite() { return white; }
+
+    public void setLightGray(Color c) { lightGray = c; }
+    public Color getLightGray() { return lightGray; }
 
     public void setBorderColor(Color c) { borderColor = c; }
     public Color getBorderColor() { return borderColor; }

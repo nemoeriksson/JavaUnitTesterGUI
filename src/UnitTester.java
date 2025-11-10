@@ -20,6 +20,7 @@ public class UnitTester {
         StyleGuide styleGuide = new StyleGuide();
         styleGuide.setMainColor(new Color(0,122,122));
         styleGuide.setWhite(new Color(242, 242, 242));
+        styleGuide.setLightGray(new Color(234,234,234));
 
         Header header = new Header(new Dimension(windowSize.width, 48), styleGuide);
         TestDisplay mainSection = new TestDisplay(styleGuide);
