@@ -2,6 +2,7 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class Header extends JPanel {
     private final JComboBox<String> searchBar;
@@ -23,6 +24,16 @@ public class Header extends JPanel {
         add(runButton);
     }
 
+    // Public methods
+
+    public void setSearchBarAlternatives(List<String> options) {
+        for (String option : options) {
+            searchBar.addItem(option);
+        }
+    }
+
+    // Private methods
+
     private JButton generateRunButton(StyleGuide style) {
         JButton button = new JButton("Run");
         button.setPreferredSize(new Dimension(64, 24));
@@ -43,8 +54,6 @@ public class Header extends JPanel {
         searchBar.setPreferredSize(new Dimension(200, 24));
         searchBar.setBackground(style.getWhite());
         searchBar.setSelectedItem("");
-        searchBar.addItem("Testing");
-        searchBar.addItem("Another item");
         ((JTextField)searchBar.getEditor().getEditorComponent()).setBorder(BorderFactory.createEmptyBorder(0,4,0,0));
 
         return searchBar;

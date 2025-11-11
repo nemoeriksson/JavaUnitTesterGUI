@@ -25,4 +25,6 @@ public class Window extends JFrame {
         add(mainSection, BorderLayout.CENTER);
         pack();
     }
+
+    public Header getHeader() { return header; }
 }

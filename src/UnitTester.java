@@ -14,16 +14,15 @@ public class UnitTester {
 
         // Create GUI window
         Dimension windowSize = new Dimension(600, 400);
-        Window window = new Window("Custom Unit Tester - NUnit1", windowSize, styleGuide);
+        Window GUI = new Window("Custom Unit Tester - NUnit1", windowSize, styleGuide);
 
         // Read classes
         ClassParser classParser = new ClassParser();
         List<Class<?>> testClasses = classParser.getTestClasses();
 
-        for (Class<?> testClass : testClasses) {
-            System.out.println("Found test class: " + testClass.getName());
-        }
+        List<String> classNames = classParser.getClassNames(testClasses);
+        GUI.getHeader().setSearchBarAlternatives(classNames);
 
-        window.setVisible(true);
+        GUI.setVisible(true);
     }
 }

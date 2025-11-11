@@ -37,6 +37,16 @@ public class ClassParser {
         return null;
     }
 
+    public List<String> getClassNames(List<Class<?>> classes) {
+        List<String> classNames = new ArrayList<>();
+
+        for (Class<?> class_ : classes) {
+            classNames.add(class_.getName());
+        }
+
+        return classNames;
+    }
+
     // Private methods
 
     private List<Class<?>> handleDirOrFile(File entry) {
