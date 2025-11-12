@@ -8,10 +8,6 @@ public class UnitTester {
     public static void main(String[] args) {
         // GUI Styling
         StyleGuide styleGuide = new StyleGuide();
-        styleGuide.setIcon(StyleGuide.IconType.INFO, "/resources/infoIcon.png");
-        styleGuide.setIcon(StyleGuide.IconType.SUCCESS, "/resources/successIcon.png");
-        styleGuide.setIcon(StyleGuide.IconType.FAILURE, "/resources/failureIcon.png");
-        styleGuide.setIcon(StyleGuide.IconType.ERROR, "/resources/errorIcon.png");
         styleGuide.setMainColor(new Color(0,122,122));
         styleGuide.setLightGray(new Color(234,234,234));
         styleGuide.setWhite(new Color(242, 242, 242));

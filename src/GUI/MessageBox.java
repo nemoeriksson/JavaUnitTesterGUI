@@ -21,9 +21,7 @@ public class MessageBox extends JPanel{
 
     // Public methods
 
-    public void setMessage(ImageIcon icon, String headerText, String contentText) {
-        headerLabel.setIcon(icon);
-
+    public void setMessage(String headerText, String contentText) {
         // uses HTML to add line wrapping
         headerLabel.setText(String.format("<html><p>%s</p></html>", headerText));
         contentLabel.setText(String.format("<html><p>%s</p></html>", contentText));
@@ -35,7 +33,7 @@ public class MessageBox extends JPanel{
         JLabel label = new JLabel();
         label.setIconTextGap(8);
         label.setBorder(BorderFactory.createEmptyBorder(4,12,0,12));
-
+        label.setFont(new Font(label.getFont().getFontName(), label.getFont().getStyle(), 16));
         return label;
     }
 

@@ -20,9 +20,9 @@ public class SummaryPanel extends JPanel {
         setPreferredSize(new Dimension(width, getHeight()));
         setBorder(new MatteBorder(0, 2, 0, 0, style.getBorderColor()));
 
-        successfullCountLabel = createLabel(style.getIcon(StyleGuide.IconType.SUCCESS), "Successful tests: ");
-        failedCountLabel = createLabel(style.getIcon(StyleGuide.IconType.FAILURE), "Failed tests: ");
-        erroredCountLabel = createLabel(style.getIcon(StyleGuide.IconType.ERROR), "Errored tests: ");
+        successfullCountLabel = createLabel("Successful tests: ");
+        failedCountLabel = createLabel("Failed tests: ");
+        erroredCountLabel = createLabel("Errored tests: ");
 
         add(successfullCountLabel);
         add(failedCountLabel);
@@ -33,10 +33,8 @@ public class SummaryPanel extends JPanel {
 
     // Private methods
 
-    private JLabel createLabel(ImageIcon icon, String text) {
+    private JLabel createLabel(String text) {
         JLabel label = new JLabel(text);
-        label.setIcon(icon);
-        label.setIconTextGap(8);
         label.setBorder(BorderFactory.createEmptyBorder(8,8,4,8));
         return label;
     }
