@@ -9,23 +9,13 @@ public class TestDisplay extends JPanel{
     private final TestDetailsPanel testDetailsPanel;
     private final MessageBox messageBox;
 
-    private final IconSet<IconType> icons = new IconSet<>();
-
-    public enum IconType {
-        INFO, ERROR, SUCCESS
-    }
-
     // Constructors
 
     public TestDisplay(StyleGuide style) {
         // Set icons
-        icons.addIcon(IconType.INFO, "/resources/info-circle.png");
-        icons.addIcon(IconType.SUCCESS, "/resources/check-circle.png");
-        icons.addIcon(IconType.ERROR, "/resources/alert-circle.png");
-
         JPanel emptyPanel = new JPanel(); // Viewed by default
         messageBox = new MessageBox(style);
-        testDetailsPanel = new TestDetailsPanel(icons, style);
+        testDetailsPanel = new TestDetailsPanel(style);
 
         setBackground(style.getWhite());
         setLayout(this.layout);

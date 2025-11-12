@@ -1,7 +1,6 @@
 package GUI;
 
 import javax.swing.*;
-import javax.swing.border.MatteBorder;
 import java.awt.*;
 
 public class TestDetailsPanel extends JPanel {
@@ -9,13 +8,13 @@ public class TestDetailsPanel extends JPanel {
     private final JPanel testDetailsPanel;
     private final SummaryPanel summaryPanel;
 
-    public TestDetailsPanel(IconSet<TestDisplay.IconType> icons, StyleGuide style) {
+    public TestDetailsPanel(StyleGuide style) {
         super();
 
         setLayout(layout);
 
         testDetailsPanel = generateTestDetailsPanel();
-        summaryPanel = new SummaryPanel(180, icons, style);
+        summaryPanel = new SummaryPanel(180, style);
 
         add(testDetailsPanel, BorderLayout.CENTER);
         add(summaryPanel, BorderLayout.EAST);

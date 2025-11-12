@@ -11,20 +11,18 @@ public class SummaryPanel extends JPanel {
     private final JLabel failedCountLabel;
     private final JLabel erroredCountLabel;
 
-    public SummaryPanel(int width, IconSet<TestDisplay.IconType> icons, StyleGuide style) {
+    public SummaryPanel(int width, StyleGuide style) {
         super();
 
         layout = new BoxLayout(this, BoxLayout.Y_AXIS);
-
-        // TODO: Different icons for failed and error
 
         setLayout(layout);
         setPreferredSize(new Dimension(width, getHeight()));
         setBorder(new MatteBorder(0, 2, 0, 0, style.getBorderColor()));
 
-        successfullCountLabel = createLabel(icons.getIcon(TestDisplay.IconType.SUCCESS), "Successful tests: ");
-        failedCountLabel = createLabel(icons.getIcon(TestDisplay.IconType.ERROR), "Failed tests: ");
-        erroredCountLabel = createLabel(icons.getIcon(TestDisplay.IconType.ERROR), "Errored tests: ");
+        successfullCountLabel = createLabel(style.getIcon(StyleGuide.IconType.SUCCESS), "Successful tests: ");
+        failedCountLabel = createLabel(style.getIcon(StyleGuide.IconType.FAILURE), "Failed tests: ");
+        erroredCountLabel = createLabel(style.getIcon(StyleGuide.IconType.ERROR), "Errored tests: ");
 
         add(successfullCountLabel);
         add(failedCountLabel);
