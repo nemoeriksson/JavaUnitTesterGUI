@@ -41,6 +41,11 @@ public class RunButtonEvent implements ActionListener {
 
         List<TestResult> testResults = executor.doInBackground();
 
+        // TODO:
+        // Call execute instead of doInBackground
+        // Update GUI in done method
+        // Get return with the get() method
+
         int successfull = 0;
         int failed = 0;
         int errored = 0;
