@@ -130,7 +130,7 @@ public class TestExecutor extends SwingWorker<List<TestResult>, Object> {
         // Test method threw error
         catch (InvocationTargetException e) {
             return new TestResult(TestResult.Status.ERRORED, String.format(
-                    "Test %d: %s - ERROR \n%s", testNum, testMethod.getName(), e.getCause().getMessage()
+                    "Test %d: %s - ERROR \n%s", testNum, testMethod.getName(), e.getCause()
             ));
         }
         // Critical error
