@@ -35,7 +35,7 @@ public class TestInfo {
                 setup = method;
             } else if (methodName.equals("tearDown")) {
                 tearDown = method;
-            } else if (methodName.startsWith("test")) {
+            } else if (methodName.startsWith("test") && method.getReturnType() == boolean.class) {
                 testMethods.add(method);
             }
         }

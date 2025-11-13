@@ -15,8 +15,7 @@ public class Test1 implements TestClass {
 	}
 
 	//Test that should succeed
-	public boolean testInitialisation() throws InterruptedException {
-		Thread.sleep(15000);
+	public boolean testInitialisation() {
 		return myInt.value()==0;
 	}
 
@@ -27,7 +26,7 @@ public class Test1 implements TestClass {
 	   return myInt.value()==2;
 
 	}
-	
+
 	//Test that should succeed
 	public boolean testDecrement() {
 		   myInt.increment();
