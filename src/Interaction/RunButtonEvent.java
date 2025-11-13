@@ -1,19 +1,22 @@
-package Intermediate;
+package Interaction;
 
+import Core.TestExecutor;
+import Core.TestResult;
 import GUI.Header;
 import GUI.TestDisplay;
-import Tester.TestRunner;
+import Core.TestInfoCollection;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class RunButtonEvent implements ActionListener {
     private JComboBox<String> searchBar;
     private TestDisplay testDisplay;
-    private TestRunner tester;
+    private TestInfoCollection tester;
 
-    public RunButtonEvent(TestRunner tester, Header header, TestDisplay testDisplay) {
+    public RunButtonEvent(TestInfoCollection tester, Header header, TestDisplay testDisplay) {
         searchBar = header.getSearchBar();
         this.testDisplay = testDisplay;
         this.tester = tester;
@@ -23,15 +26,22 @@ public class RunButtonEvent implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String selectedItem = (String)searchBar.getSelectedItem();
 
-        if (validateAlternative(selectedItem)) {
-            // Open results panel and run setup, tests, and teardown.
-            System.out.println("Valid test class");
-            testDisplay.showPanel(TestDisplay.DisplayType.RESULT);
-        }
-        else { // Invalid alternative
+        if (!validateAlternative(selectedItem)) {
             // Open message box and display error message
             testDisplay.showPanel(TestDisplay.DisplayType.MESSAGE);
             displayError(selectedItem);
+            return;
+        }
+
+        // Open results panel and run setup, tests, and teardown.
+        testDisplay.showPanel(TestDisplay.DisplayType.RESULT);
+
+        TestExecutor executor = new TestExecutor(tester.getTestInfo(selectedItem));
+
+        List<TestResult> testResults = executor.doInBackground();
+
+        for (TestResult result : testResults) {
+            System.out.println(result.getMessage());
         }
     }
 

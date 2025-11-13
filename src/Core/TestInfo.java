@@ -1,18 +1,18 @@
-package Tester;
+package Core;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestClassInfo {
+public class TestInfo {
     private Class<?> testClass;
     private Constructor<?> constructor;
     private Method setup;
     private Method tearDown;
     private List<Method> testMethods;
 
-    public TestClassInfo(Class<?> testClass) {
+    public TestInfo(Class<?> testClass) {
         this.testClass = testClass;
 
         // Find constructor

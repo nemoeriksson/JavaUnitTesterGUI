@@ -1,12 +1,10 @@
 import GUI.StyleGuide;
 import GUI.Window;
-import Intermediate.RunButtonEvent;
-import Tester.TestClassInfo;
-import Tester.TestRunner;
+import Interaction.RunButtonEvent;
+import Core.TestInfo;
+import Core.TestInfoCollection;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,15 +25,15 @@ public class UnitTester {
         List<Class<?>> testClasses = classParser.getTestClasses();
 
         List<String> classNames = classParser.getClassNames(testClasses);
-        List<TestClassInfo> testClassInfoList = new ArrayList<>();
+        List<TestInfo> testClassInfoList = new ArrayList<>();
         for (Class<?> testClass : testClasses) {
-            testClassInfoList.add(new TestClassInfo(testClass));
+            testClassInfoList.add(new TestInfo(testClass));
         }
 
         // Setup
 
         RunButtonEvent runButtonEvent = new RunButtonEvent(
-                new TestRunner(testClassInfoList),
+                new TestInfoCollection(testClassInfoList),
                 GUI.getHeader(),
                 GUI.getTestDisplay()
         );
