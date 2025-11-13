@@ -48,9 +48,11 @@ public class ContentDisplay extends JPanel{
 
     public MessageBox getMessageBox() { return messageBox; }
     public SummaryPanel getSummaryPanel() { return resultInfoPanel.getSummaryPanel(); }
+    public ScrollablePanel getScrollablePanel() { return resultInfoPanel.getScrollablePanel(); }
 
     public void reset() {
         resultInfoPanel.getSummaryPanel().resetLabels();
+        resultInfoPanel.getScrollablePanel().reset();
     }
 
     // Private methods

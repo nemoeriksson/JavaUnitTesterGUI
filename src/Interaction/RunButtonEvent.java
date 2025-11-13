@@ -5,6 +5,7 @@ import Core.TestResult;
 import GUI.Header;
 import GUI.ContentDisplay;
 import Core.TestInfoCollection;
+import GUI.ScrollablePanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -45,6 +46,7 @@ public class RunButtonEvent implements ActionListener {
         int errored = 0;
 
         boolean encounteredInternalError = false;
+        ScrollablePanel scrollablePanel = contentDisplay.getScrollablePanel();
 
         for (TestResult result : testResults) {
             switch (result.getStatus()) {
@@ -61,6 +63,8 @@ public class RunButtonEvent implements ActionListener {
                             result.getMessage());
                 }
             }
+
+            scrollablePanel.createNewLabel(result.getMessage());
         }
 
         if (!encounteredInternalError) {
