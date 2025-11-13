@@ -37,7 +37,7 @@ public class TestDisplay extends JPanel{
         add(messageBox, "msgpanel");
         add(testDetailsPanel, "respanel");
 
-        layout.show(this, "empty");
+        showPanel(DisplayType.EMPTY);
     }
 
     // Public methods
@@ -47,6 +47,7 @@ public class TestDisplay extends JPanel{
     }
 
     public MessageBox getMessageBox() { return messageBox; }
+
     // Private methods
 
 }

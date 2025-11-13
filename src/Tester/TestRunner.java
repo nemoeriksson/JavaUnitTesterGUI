@@ -3,8 +3,24 @@ package Tester;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 public class TestRunner {
+    private List<TestClassInfo> testInfoList;
+
+    public TestRunner(List<TestClassInfo> testInfoList) {
+        this.testInfoList = testInfoList;
+    }
+
+    public boolean isValidTest(String className) {
+        for (TestClassInfo testInfo : testInfoList) {
+            if (testInfo.getTestClass().getName().equals(className))
+                return true;
+        }
+
+        return false;
+    }
+
     public boolean runTest(Constructor<?> constructor, Method method) {
         try {
             Object result = method.invoke(constructor.newInstance());

@@ -27,17 +27,21 @@ public class UnitTester {
         List<Class<?>> testClasses = classParser.getTestClasses();
 
         List<String> classNames = classParser.getClassNames(testClasses);
-
-        // Setup
-        GUI.getHeader().setSearchBarAlternatives(classNames);
-        GUI.getHeader().setRunButtonActionListener(new RunButtonEvent(GUI.getHeader(), GUI.getTestDisplay()));
-
         List<TestClassInfo> testClassInfoList = new ArrayList<>();
         for (Class<?> testClass : testClasses) {
             testClassInfoList.add(new TestClassInfo(testClass));
         }
 
-        TestRunner tester = new TestRunner();
+        // Setup
+
+        RunButtonEvent runButtonEvent = new RunButtonEvent(
+                new TestRunner(testClassInfoList),
+                GUI.getHeader(),
+                GUI.getTestDisplay()
+        );
+
+        GUI.getHeader().setSearchBarAlternatives(classNames);
+        GUI.getHeader().setRunButtonActionListener(runButtonEvent);
 
         GUI.setVisible(true);
     }
