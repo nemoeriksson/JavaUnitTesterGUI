@@ -30,7 +30,7 @@ public class UnitTester {
 
         // Setup
         GUI.getHeader().setSearchBarAlternatives(classNames);
-        GUI.getHeader().setRunButtonActionListener(new RunButtonEvent(GUI.getHeader()));
+        GUI.getHeader().setRunButtonActionListener(new RunButtonEvent(GUI.getHeader(), GUI.getTestDisplay()));
 
         List<TestClassInfo> testClassInfoList = new ArrayList<>();
         for (Class<?> testClass : testClasses) {

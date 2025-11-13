@@ -27,4 +27,6 @@ public class Window extends JFrame {
     }
 
     public Header getHeader() { return header; }
+
+    public TestDisplay getTestDisplay() { return mainSection; }
 }

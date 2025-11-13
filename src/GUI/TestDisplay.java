@@ -9,6 +9,19 @@ public class TestDisplay extends JPanel{
     private final TestDetailsPanel testDetailsPanel;
     private final MessageBox messageBox;
 
+    public enum DisplayType {
+        EMPTY("empty"),
+        MESSAGE("msgpanel"),
+        RESULT("respanel");
+
+        private String str;
+
+        DisplayType(String str) { this.str = str; }
+
+        @Override
+        public String toString() { return str; }
+    }
+
     // Constructors
 
     public TestDisplay(StyleGuide style) {
@@ -24,11 +37,16 @@ public class TestDisplay extends JPanel{
         add(messageBox, "msgpanel");
         add(testDetailsPanel, "respanel");
 
-        layout.show(this, "respanel");
+        layout.show(this, "empty");
     }
 
     // Public methods
 
+    public void showPanel(DisplayType type){
+        layout.show(this, type.toString());
+    }
+
+    public MessageBox getMessageBox() { return messageBox; }
     // Private methods
 
 }
