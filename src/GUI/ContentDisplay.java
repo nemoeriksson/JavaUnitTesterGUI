@@ -3,10 +3,10 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 
-public class TestDisplay extends JPanel{
+public class ContentDisplay extends JPanel{
     private final CardLayout layout = new CardLayout();
 
-    private final TestDetailsPanel testDetailsPanel;
+    private final ResultInfoPanel resultInfoPanel;
     private final MessageBox messageBox;
 
     public enum DisplayType {
@@ -24,18 +24,18 @@ public class TestDisplay extends JPanel{
 
     // Constructors
 
-    public TestDisplay(StyleGuide style) {
+    public ContentDisplay(StyleGuide style) {
         // Set icons
         JPanel emptyPanel = new JPanel(); // Viewed by default
         messageBox = new MessageBox(style);
-        testDetailsPanel = new TestDetailsPanel(style);
+        resultInfoPanel = new ResultInfoPanel(style);
 
         setBackground(style.getWhite());
         setLayout(this.layout);
 
         add(emptyPanel, "empty");
         add(messageBox, "msgpanel");
-        add(testDetailsPanel, "respanel");
+        add(resultInfoPanel, "respanel");
 
         showPanel(DisplayType.EMPTY);
     }
@@ -47,10 +47,10 @@ public class TestDisplay extends JPanel{
     }
 
     public MessageBox getMessageBox() { return messageBox; }
-    public SummaryPanel getSummaryPanel() { return testDetailsPanel.getSummaryPanel(); }
+    public SummaryPanel getSummaryPanel() { return resultInfoPanel.getSummaryPanel(); }
 
     public void reset() {
-        testDetailsPanel.getSummaryPanel().resetLabels();
+        resultInfoPanel.getSummaryPanel().resetLabels();
     }
 
     // Private methods

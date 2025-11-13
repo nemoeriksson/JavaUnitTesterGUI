@@ -7,7 +7,7 @@ public class Window extends JFrame {
     private final BorderLayout layout = new BorderLayout();
 
     private final Header header;
-    private final TestDisplay mainSection;
+    private final ContentDisplay mainSection;
 
     public Window(String title, Dimension size, StyleGuide style) {
         super(title);
@@ -18,7 +18,7 @@ public class Window extends JFrame {
         setMinimumSize(size);
 
         header = new Header(new Dimension(size.width, 48), style);
-        mainSection = new TestDisplay(style);
+        mainSection = new ContentDisplay(style);
 
         setLayout(layout);
         add(header, BorderLayout.NORTH);
@@ -28,5 +28,5 @@ public class Window extends JFrame {
 
     public Header getHeader() { return header; }
 
-    public TestDisplay getTestDisplay() { return mainSection; }
+    public ContentDisplay getTestDisplay() { return mainSection; }
 }

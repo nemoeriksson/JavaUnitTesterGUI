@@ -3,7 +3,7 @@ package Interaction;
 import Core.TestExecutor;
 import Core.TestResult;
 import GUI.Header;
-import GUI.TestDisplay;
+import GUI.ContentDisplay;
 import Core.TestInfoCollection;
 
 import javax.swing.*;
@@ -13,12 +13,12 @@ import java.util.List;
 
 public class RunButtonEvent implements ActionListener {
     private JComboBox<String> searchBar;
-    private TestDisplay testDisplay;
+    private ContentDisplay contentDisplay;
     private TestInfoCollection tester;
 
-    public RunButtonEvent(TestInfoCollection tester, Header header, TestDisplay testDisplay) {
+    public RunButtonEvent(TestInfoCollection tester, Header header, ContentDisplay contentDisplay) {
         searchBar = header.getSearchBar();
-        this.testDisplay = testDisplay;
+        this.contentDisplay = contentDisplay;
         this.tester = tester;
     }
 
@@ -28,7 +28,7 @@ public class RunButtonEvent implements ActionListener {
 
         if (!validateAlternative(selectedItem)) {
             // Open message box and display error message
-            testDisplay.showPanel(TestDisplay.DisplayType.MESSAGE);
+            contentDisplay.showPanel(ContentDisplay.DisplayType.MESSAGE);
             displayError(selectedItem);
             return;
         }
@@ -36,7 +36,7 @@ public class RunButtonEvent implements ActionListener {
         // Run all tests and get results
         TestExecutor executor = new TestExecutor(tester.getTestInfo(selectedItem));
 
-        testDisplay.reset();
+        contentDisplay.reset();
 
         List<TestResult> testResults = executor.doInBackground();
 
@@ -55,8 +55,8 @@ public class RunButtonEvent implements ActionListener {
                 // Display error about the internal error
                 case INTERNAL_ERROR -> {
                     encounteredInternalError = true;
-                    testDisplay.showPanel(TestDisplay.DisplayType.MESSAGE);
-                    testDisplay.getMessageBox().setMessage(
+                    contentDisplay.showPanel(ContentDisplay.DisplayType.MESSAGE);
+                    contentDisplay.getMessageBox().setMessage(
                             "An internal error occurred",
                             result.getMessage());
                 }
@@ -64,8 +64,8 @@ public class RunButtonEvent implements ActionListener {
         }
 
         if (!encounteredInternalError) {
-            testDisplay.getSummaryPanel().setLabels(successfull, failed, errored);
-            testDisplay.showPanel(TestDisplay.DisplayType.RESULT);
+            contentDisplay.getSummaryPanel().setLabels(successfull, failed, errored);
+            contentDisplay.showPanel(ContentDisplay.DisplayType.RESULT);
         }
     }
 
@@ -82,12 +82,12 @@ public class RunButtonEvent implements ActionListener {
 
     private void displayError(String selectedItem) {
         if (selectedItem.isEmpty()) {
-            testDisplay.getMessageBox().setMessage(
+            contentDisplay.getMessageBox().setMessage(
                     "Empty test class name",
                     "Name of test class can not be empty. Please enter a valid test class or select one from the dropdown."
             );
         } else {
-            testDisplay.getMessageBox().setMessage(
+            contentDisplay.getMessageBox().setMessage(
                     "Test class not found",
                     String.format("No test class named '%s' found. Please enter a valid test class or select one from the dropdown.", selectedItem)
             );

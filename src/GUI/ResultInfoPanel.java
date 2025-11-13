@@ -3,12 +3,12 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 
-public class TestDetailsPanel extends JPanel {
+public class ResultInfoPanel extends JPanel {
     private final BorderLayout layout = new BorderLayout();
     private final JPanel testDetailsPanel;
     private final SummaryPanel summaryPanel;
 
-    public TestDetailsPanel(StyleGuide style) {
+    public ResultInfoPanel(StyleGuide style) {
         super();
 
         setLayout(layout);
