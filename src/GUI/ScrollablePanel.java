@@ -28,7 +28,7 @@ public class ScrollablePanel extends JScrollPane {
     }
 
     public void reset() {
-        //contentPanel.removeAll();
+        contentPanel.removeAll();
         contentPanel.revalidate();
         contentPanel.repaint();
     }
