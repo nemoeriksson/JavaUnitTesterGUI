@@ -1,16 +1,13 @@
 package Interaction;
 
-import Core.TestExecutor;
-import Core.TestResult;
+import Core.TestInfo;
 import GUI.Header;
 import GUI.ContentDisplay;
 import Core.TestInfoCollection;
-import GUI.ScrollablePanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 public class RunButtonEvent implements ActionListener {
     private JComboBox<String> searchBar;
@@ -34,48 +31,19 @@ public class RunButtonEvent implements ActionListener {
             return;
         }
 
-        // Run all tests and get results
-        TestExecutor executor = new TestExecutor(tester.getTestInfo(selectedItem));
+        TestInfo testInfo = tester.getTestInfo(selectedItem);
 
+        // Setup GUI
+        contentDisplay.showPanel(ContentDisplay.DisplayType.RESULT);
         contentDisplay.reset();
+        contentDisplay.getScrollablePanel().createNewLabel(String.format(
+                "Running tests for %s - please wait",
+                testInfo.getTestClass().getName()
+                ));
 
-        List<TestResult> testResults = executor.doInBackground();
-
-        // TODO:
-        // Call execute instead of doInBackground
-        // Update GUI in done method
-        // Get return with the get() method
-
-        int successfull = 0;
-        int failed = 0;
-        int errored = 0;
-
-        boolean encounteredInternalError = false;
-        ScrollablePanel scrollablePanel = contentDisplay.getScrollablePanel();
-
-        for (TestResult result : testResults) {
-            switch (result.getStatus()) {
-                case SUCCEEDED -> successfull++;
-                case FAILED -> failed++;
-                case ERRORED -> errored++;
-
-                // Display error about the internal error
-                case INTERNAL_ERROR -> {
-                    encounteredInternalError = true;
-                    contentDisplay.showPanel(ContentDisplay.DisplayType.MESSAGE);
-                    contentDisplay.getMessageBox().setMessage(
-                            "An internal error occurred",
-                            result.getMessage());
-                }
-            }
-
-            scrollablePanel.createNewLabel(result.getMessage());
-        }
-
-        if (!encounteredInternalError) {
-            contentDisplay.getSummaryPanel().setLabels(successfull, failed, errored);
-            contentDisplay.showPanel(ContentDisplay.DisplayType.RESULT);
-        }
+        // Run all tests
+        TestExecutor executor = new TestExecutor(testInfo, contentDisplay);
+        executor.execute();
     }
 
     // Private methods

@@ -15,8 +15,9 @@ public class Test1 implements TestClass {
 	}
 
 	//Test that should succeed
-	public boolean testInitialisation() {
-	   return myInt.value()==0;
+	public boolean testInitialisation() throws InterruptedException {
+		Thread.sleep(15000);
+		return myInt.value()==0;
 	}
 
 	//Test that should succeed

@@ -1,16 +1,24 @@
-package Core;
+package Interaction;
+
+import Core.TestInfo;
+import Core.TestResult;
+import GUI.ContentDisplay;
+import GUI.ScrollablePanel;
 
 import javax.swing.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class TestExecutor extends SwingWorker<List<TestResult>, Object> {
     private TestInfo testInfo;
+    private ContentDisplay contentDisplay;
 
-    public TestExecutor(TestInfo testInfo) {
+    public TestExecutor(TestInfo testInfo, ContentDisplay contentDisplay) {
         this.testInfo = testInfo;
+        this.contentDisplay = contentDisplay;
     }
 
     // Public methods
@@ -58,6 +66,49 @@ public class TestExecutor extends SwingWorker<List<TestResult>, Object> {
                     "Unable to create instance of class %s",
                     testInfo.getTestClass().getName()
             ));
+        }
+    }
+
+    @Override
+    public void done() {
+        List<TestResult> testResults;
+
+        try {
+            testResults = get();
+        } catch (InterruptedException|ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+
+        int successfull = 0;
+        int failed = 0;
+        int errored = 0;
+
+        boolean encounteredInternalError = false;
+        ScrollablePanel scrollablePanel = contentDisplay.getScrollablePanel();
+        scrollablePanel.reset();
+
+        for (TestResult result : testResults) {
+            switch (result.getStatus()) {
+                case SUCCEEDED -> successfull++;
+                case FAILED -> failed++;
+                case ERRORED -> errored++;
+
+                // Display error about the internal error
+                case INTERNAL_ERROR -> {
+                    encounteredInternalError = true;
+                    contentDisplay.showPanel(ContentDisplay.DisplayType.MESSAGE);
+                    contentDisplay.getMessageBox().setMessage(
+                            "An internal error occurred",
+                            result.getMessage());
+                }
+            }
+
+            scrollablePanel.createNewLabel(result.getMessage());
+        }
+
+        if (!encounteredInternalError) {
+            contentDisplay.getSummaryPanel().setLabels(successfull, failed, errored);
+            contentDisplay.showPanel(ContentDisplay.DisplayType.RESULT);
         }
     }
 
