@@ -22,6 +22,8 @@ public class TestDetailsPanel extends JPanel {
 
     // Public methods
 
+    public SummaryPanel getSummaryPanel() { return summaryPanel; }
+
     // Private methods
 
     private JPanel generateTestDetailsPanel() {

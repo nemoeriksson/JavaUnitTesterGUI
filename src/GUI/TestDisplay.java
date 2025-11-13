@@ -47,6 +47,11 @@ public class TestDisplay extends JPanel{
     }
 
     public MessageBox getMessageBox() { return messageBox; }
+    public SummaryPanel getSummaryPanel() { return testDetailsPanel.getSummaryPanel(); }
+
+    public void reset() {
+        testDetailsPanel.getSummaryPanel().resetLabels();
+    }
 
     // Private methods
 

@@ -24,7 +24,7 @@ public class RunButtonEvent implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String selectedItem = (String)searchBar.getSelectedItem();
+        String selectedItem = (String) searchBar.getSelectedItem();
 
         if (!validateAlternative(selectedItem)) {
             // Open message box and display error message
@@ -33,15 +33,39 @@ public class RunButtonEvent implements ActionListener {
             return;
         }
 
-        // Open results panel and run setup, tests, and teardown.
-        testDisplay.showPanel(TestDisplay.DisplayType.RESULT);
-
+        // Run all tests and get results
         TestExecutor executor = new TestExecutor(tester.getTestInfo(selectedItem));
+
+        testDisplay.reset();
 
         List<TestResult> testResults = executor.doInBackground();
 
+        int successfull = 0;
+        int failed = 0;
+        int errored = 0;
+
+        boolean encounteredInternalError = false;
+
         for (TestResult result : testResults) {
-            System.out.println(result.getMessage());
+            switch (result.getStatus()) {
+                case SUCCEEDED -> successfull++;
+                case FAILED -> failed++;
+                case ERRORED -> errored++;
+
+                // Display error about the internal error
+                case INTERNAL_ERROR -> {
+                    encounteredInternalError = true;
+                    testDisplay.showPanel(TestDisplay.DisplayType.MESSAGE);
+                    testDisplay.getMessageBox().setMessage(
+                            "An internal error occurred",
+                            result.getMessage());
+                }
+            }
+        }
+
+        if (!encounteredInternalError) {
+            testDisplay.getSummaryPanel().setLabels(successfull, failed, errored);
+            testDisplay.showPanel(TestDisplay.DisplayType.RESULT);
         }
     }
 
