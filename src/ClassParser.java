@@ -24,9 +24,7 @@ public class ClassParser {
                 URL url = urls.nextElement();
                 root = new File(url.getPath());
 
-                List<Class<?>> testClasses = handleDirOrFile(root);
-
-                return testClasses;
+                return handleDirOrFile(root);
             }
         } catch (IOException e) {
             System.out.println("Unable to find test classes.");
@@ -86,7 +84,7 @@ public class ClassParser {
             return false;
 
         // Check that the class implements TestClass
-        if (!implementsTestClass(class_))
+        if (!se.umu.cs.unittest.TestClass.class.isAssignableFrom(class_))
             return false;
 
         // Check that the class has a constructor without parameters
@@ -102,17 +100,6 @@ public class ClassParser {
             System.out.println("Error: " + e);
         }
         return null;
-    }
-
-    private boolean implementsTestClass(Class<?> class_) {
-        Class<?>[] interfaces = class_.getInterfaces();
-
-        for (Class<?> interface_ : interfaces) {
-            if (interface_.getName().equals("se.umu.cs.unittest.TestClass"))
-                return true;
-        }
-
-        return false;
     }
 
     private boolean hasEligibleConstructor(Class<?> class_) {
@@ -131,5 +118,4 @@ public class ClassParser {
         String relativePath = absPath.substring(rootPath.length()+1);
         return relativePath.replace(File.separatorChar, '.').replaceAll("\\.class", "");
     }
-
 }

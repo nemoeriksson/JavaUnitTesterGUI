@@ -1,7 +1,13 @@
 import GUI.StyleGuide;
 import GUI.Window;
+import Intermediate.RunButtonEvent;
+import Tester.TestClassInfo;
+import Tester.TestRunner;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UnitTester {
@@ -21,7 +27,17 @@ public class UnitTester {
         List<Class<?>> testClasses = classParser.getTestClasses();
 
         List<String> classNames = classParser.getClassNames(testClasses);
+
+        // Setup
         GUI.getHeader().setSearchBarAlternatives(classNames);
+        GUI.getHeader().setRunButtonActionListener(new RunButtonEvent(GUI.getHeader()));
+
+        List<TestClassInfo> testClassInfoList = new ArrayList<>();
+        for (Class<?> testClass : testClasses) {
+            testClassInfoList.add(new TestClassInfo(testClass));
+        }
+
+        TestRunner tester = new TestRunner();
 
         GUI.setVisible(true);
     }

@@ -2,6 +2,7 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 public class Header extends JPanel {
@@ -31,6 +32,18 @@ public class Header extends JPanel {
             searchBar.addItem(option);
         }
     }
+
+    public void setRunButtonActionListener(ActionListener actionListener) {
+        // Remove any current
+        for (ActionListener al : runButton.getActionListeners()) {
+            runButton.removeActionListener(al);
+        }
+
+        // Add specified
+        runButton.addActionListener(actionListener);
+    }
+
+    public JComboBox<String> getSearchBar() { return searchBar; }
 
     // Private methods
 
