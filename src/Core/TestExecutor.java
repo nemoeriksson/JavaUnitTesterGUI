@@ -23,6 +23,7 @@ public class TestExecutor extends SwingWorker<List<TestResult>, Object> {
             Method setup = testInfo.getSetup();
             Method tearDown = testInfo.getTearDown();
 
+            int testNum = 1;
             for (Method testMethod : testInfo.getTestMethods()) {
                 Object instance = testInfo.getConstructor().newInstance();
 
@@ -31,12 +32,14 @@ public class TestExecutor extends SwingWorker<List<TestResult>, Object> {
                     setup.invoke(instance);
                 }
 
-                TestResult result = runTest(instance, testMethod);
+                TestResult result = runTestMethod(instance, testMethod, testNum);
                 testResults.add(result);
 
                 // Run teardown
                 if (tearDown != null)
                     tearDown.invoke(instance);
+
+                testNum++;
             }
 
             return testResults;
@@ -60,13 +63,14 @@ public class TestExecutor extends SwingWorker<List<TestResult>, Object> {
 
     // Private methods
 
-    private TestResult runTest(Object instance, Method testMethod) {
+    private TestResult runTestMethod(Object instance, Method testMethod, int testNum) {
         try {
             boolean succeeded = (boolean)testMethod.invoke(instance);
 
             return new TestResult(
                     succeeded ? TestResult.Status.SUCCEEDED : TestResult.Status.FAILED,
-                    String.format("Test %s - %s",
+                    String.format("Test %d: %s - %s",
+                            testNum,
                             testMethod.getName(),
                             succeeded ? "PASSED" : "FAILED"
                     )
@@ -75,7 +79,7 @@ public class TestExecutor extends SwingWorker<List<TestResult>, Object> {
         // Test method threw error
         catch (InvocationTargetException e) {
             return new TestResult(TestResult.Status.ERRORED, String.format(
-                    "Test %s - FAILED %s", testMethod.getName(), e.getCause().getMessage()
+                    "Test %d: %s - ERROR \n\t%s", testNum, testMethod.getName(), e.getCause().getMessage()
             ));
         }
         // Critical error
