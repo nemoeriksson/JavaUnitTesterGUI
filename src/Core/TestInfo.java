@@ -5,6 +5,13 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class containing all relevant information
+ * about a test class.
+ *
+ * @author c24nen
+ * @version 17.11.25
+ */
 public class TestInfo {
     private Class<?> testClass;
     private Constructor<?> constructor;
@@ -43,12 +50,40 @@ public class TestInfo {
 
     // Public methods
 
+    /**
+     * Gets the class information.
+     *
+     * @return Class
+     */
     public Class<?> getTestClass() { return testClass; }
+
+    /**
+     * Gets the setup method for a test class. Will return
+     * null if no setup method is defined for the class.
+     *
+     * @return Method, null if no setup method is defined
+     */
     public Method getSetup() { return setup; }
+
+    /**
+     * Gets the teardown method for a test class. Will return
+     * null if no teardown method is defined for the class.
+     *
+     * @return Method, null if no teardown method is defined
+     */
     public Method getTearDown() { return tearDown; }
+
+    /**
+     * Gets all test methods.
+     *
+     * @return A list of methods
+     */
     public List<Method> getTestMethods() { return testMethods; }
+
+    /**
+     * Gets the constructor for the test class.
+     *
+     * @return A constructor
+     */
     public Constructor<?> getConstructor() { return constructor; }
-
-    // Private methods
-
 }

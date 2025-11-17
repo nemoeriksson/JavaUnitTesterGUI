@@ -8,6 +8,13 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
+/**
+ * A utility class for loading test classes from
+ * the class path at runtime.
+ *
+ * @author c24nen
+ * @version 17.11.25
+ */
 public class ClassParser {
     private final ClassLoader classLoader;
     private File root;
@@ -18,6 +25,12 @@ public class ClassParser {
 
     // Public methods
 
+    /**
+     * Searches for all valid test classes from the
+     * class path.
+     *
+     * @return A list of test classes
+     */
     public List<Class<?>> getTestClasses() {
         try {
             Enumeration<URL> urls = classLoader.getResources("");
@@ -37,6 +50,12 @@ public class ClassParser {
         return null;
     }
 
+    /**
+     * Gets a list of class names from a list of classes.
+     *
+     * @param classes A list of classes
+     * @return A list of strings containing class names
+     */
     public List<String> getClassNames(List<Class<?>> classes) {
         List<String> classNames = new ArrayList<>();
 
@@ -49,6 +68,16 @@ public class ClassParser {
 
     // Private methods
 
+    /**
+     * Returns a list of valid test classes inside a given
+     * directory.
+     * If a regular file is provided the list will only
+     * contain the class it implements if it is a valid
+     * test class.
+     *
+     * @param entry A file entry
+     * @return A list of classes
+     */
     private List<Class<?>> handleDirOrFile(File entry) {
         List<Class<?>> testClasses = new ArrayList<>();
 
@@ -64,6 +93,13 @@ public class ClassParser {
         return testClasses;
     }
 
+    /**
+     * Returns a list of all valid test classes inside a
+     * directory or one of its subdirectories.
+     *
+     * @param dir A directory file
+     * @return A list of test classes
+     */
     private List<Class<?>> handleDirectory(File dir) {
         List<Class<?>> testClasses = new ArrayList<>();
 
@@ -75,6 +111,16 @@ public class ClassParser {
         return testClasses;
     }
 
+    /**
+     * Checks if a given file is a valid test class, i.e. follows
+     * all requirements below:
+     *  - Is a valid java '.class' file
+     *  - Implements the se.umu.cs.unittest.TestClass interface
+     *  - Has a constructor without any parameters
+     *
+     * @param file A file
+     * @return true if the file represents a valid test class, else false
+     */
     private boolean isTestClass(File file) {
         // Check that file is a java class
         if (!file.getName().endsWith(".class"))
@@ -93,6 +139,12 @@ public class ClassParser {
         return hasEligibleConstructor(class_);
     }
 
+    /**
+     * Loads a class from a file and returns it.
+     *
+     * @param file A java '.class' file
+     * @return A class
+     */
     private Class<?> getAsClass(File file) {
         try {
             return classLoader.loadClass(toClassName(file));
@@ -104,6 +156,13 @@ public class ClassParser {
         return null;
     }
 
+    /**
+     * Checks if a class has a valid constructor to be
+     * a test class - i.e. one without any parameters.
+     *
+     * @param class_ A class
+     * @return true if the class has a parameterless constructor, else false
+     */
     private boolean hasEligibleConstructor(Class<?> class_) {
         for (Constructor<?> constructor : class_.getConstructors()) {
             if (constructor.getParameterCount() == 0)
@@ -113,6 +172,13 @@ public class ClassParser {
         return false;
     }
 
+    /**
+     * Returns a string with the relative path (from
+     * class path) to a class file.
+     *
+     * @param file A class file
+     * @return String with relative path
+     */
     private String toClassName(File file) {
         String absPath = file.getAbsolutePath();
         String rootPath = root.getAbsolutePath();
