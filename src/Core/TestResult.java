@@ -1,11 +1,20 @@
 package Core;
 
+/**
+ * Utility class containing information about the
+ * result of a test method being run.
+ *
+ * @author c24nen
+ * @version 25.11.17
+ */
 public class TestResult {
     private Status status;
     private String message;
 
-    // Constructors
-
+    /**
+     * Enum representing the different states
+     * of a test when completed/terminated.
+     */
     public enum Status {
         SUCCEEDED,
         FAILED,
@@ -20,8 +29,18 @@ public class TestResult {
 
     // Public methods
 
+    /**
+     * Gets the result's status
+     *
+     * @return A status
+     */
     public Status getStatus() { return status; }
-    public String getMessage() { return message; }
 
-    // Private methods
+    /**
+     * Gets a string with details about
+     * the result of the test.
+     *
+     * @return A result message
+     */
+    public String getMessage() { return message; }
 }

@@ -10,7 +10,18 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The main class containing the main logic
+ * for the unit tester program.
+ *
+ * @author c24nen
+ * @version 25.11.17
+ */
 public class UnitTester {
+    /**
+     * Main method. Creates the window and sets up the UI
+     * to use the core functionality.
+     */
     public static void main(String[] args) {
         // GUI Styling
         StyleGuide styleGuide = new StyleGuide();
@@ -32,6 +43,7 @@ public class UnitTester {
             testClassInfoList.add(new TestInfo(testClass));
         }
 
+        // Set error message if no test classes are found
         if (testClasses.isEmpty()) {
             GUI.getTestDisplay().showPanel(ContentDisplay.DisplayType.MESSAGE);
             GUI.getTestDisplay().getMessageBox().setMessage(
@@ -40,8 +52,7 @@ public class UnitTester {
             );
         }
 
-        // Setup
-
+        // Interaction setup
         RunButtonEvent runButtonEvent = new RunButtonEvent(
                 new TestInfoCollection(testClassInfoList),
                 GUI.getHeader(),

@@ -13,7 +13,7 @@ import java.util.List;
  * the class path at runtime.
  *
  * @author c24nen
- * @version 17.11.25
+ * @version 25.11.17
  */
 public class ClassParser {
     private final ClassLoader classLoader;

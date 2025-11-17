@@ -10,7 +10,7 @@ import java.util.List;
  * about a test class.
  *
  * @author c24nen
- * @version 17.11.25
+ * @version 25.11.17
  */
 public class TestInfo {
     private Class<?> testClass;

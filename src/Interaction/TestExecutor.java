@@ -12,6 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * A utility class to execute test within
+ * test classes.
+ *
+ * @author c24nen
+ * @version 25.11.17
+ */
 public class TestExecutor extends SwingWorker<List<TestResult>, Object> {
     private TestInfo testInfo;
     private ContentDisplay contentDisplay;
@@ -23,6 +30,13 @@ public class TestExecutor extends SwingWorker<List<TestResult>, Object> {
 
     // Public methods
 
+    /**
+     * Attempts to run all test methods for a test class.
+     * Will call setUp() before each test method and
+     * tearDown() after it has completed.
+     *
+     * @return A list of test results
+     */
     @Override
     public List<TestResult> doInBackground() {
         List<TestResult> testResults = new ArrayList<>();
@@ -31,6 +45,7 @@ public class TestExecutor extends SwingWorker<List<TestResult>, Object> {
             Method setup = testInfo.getSetup();
             Method tearDown = testInfo.getTearDown();
 
+            // Run all test methods
             int testNum = 1;
             for (Method testMethod : testInfo.getTestMethods()) {
                 Object instance = testInfo.getConstructor().newInstance();
@@ -40,6 +55,7 @@ public class TestExecutor extends SwingWorker<List<TestResult>, Object> {
                     setup.invoke(instance);
                 }
 
+                // Run test
                 TestResult result = runTestMethod(instance, testMethod, testNum);
                 testResults.add(result);
 
@@ -51,7 +67,9 @@ public class TestExecutor extends SwingWorker<List<TestResult>, Object> {
             }
 
             return testResults;
-        } catch (InvocationTargetException e) {
+        }
+        // Critical errors
+        catch (InvocationTargetException e) {
             return addInternalErrorResult(testResults, String.format(
                     "Error when attempting to call setUp() or tearDown() methods for %s",
                     testInfo.getTestClass().getName()
@@ -69,25 +87,33 @@ public class TestExecutor extends SwingWorker<List<TestResult>, Object> {
         }
     }
 
+    /**
+     * Updates the GUI with relevant test results
+     * after all tests have been executed.
+     */
     @Override
     public void done() {
         List<TestResult> testResults;
 
+        // Wait for doInBackground to complete
         try {
             testResults = get();
         } catch (InterruptedException|ExecutionException e) {
             throw new RuntimeException(e);
         }
 
-        int successfull = 0;
-        int failed = 0;
-        int errored = 0;
-
-        boolean encounteredInternalError = false;
+        // Reset any previous output
         ScrollablePanel scrollablePanel = contentDisplay.getScrollablePanel();
         scrollablePanel.reset();
 
+        int successfull = 0;
+        int failed = 0;
+        int errored = 0;
+        boolean encounteredInternalError = false;
+
+        // Count result types for summary view & display result info
         for (TestResult result : testResults) {
+            // Count result status types
             switch (result.getStatus()) {
                 case SUCCEEDED -> successfull++;
                 case FAILED -> failed++;
@@ -103,9 +129,11 @@ public class TestExecutor extends SwingWorker<List<TestResult>, Object> {
                 }
             }
 
+            // Append test result information to ScrollPane
             scrollablePanel.createNewLabel(result.getMessage());
         }
 
+        // Display summary details
         if (!encounteredInternalError) {
             contentDisplay.getSummaryPanel().setLabels(successfull, failed, errored);
             contentDisplay.showPanel(ContentDisplay.DisplayType.RESULT);
@@ -114,6 +142,15 @@ public class TestExecutor extends SwingWorker<List<TestResult>, Object> {
 
     // Private methods
 
+    /**
+     * Runs a test method on a test class instance and
+     * returns relevant information as a TestResult.
+     *
+     * @param instance An instance of the test class
+     * @param testMethod A test method
+     * @param testNum Test index (used in result message)
+     * @return A TestResult
+     */
     private TestResult runTestMethod(Object instance, Method testMethod, int testNum) {
         try {
             boolean succeeded = (boolean)testMethod.invoke(instance);
@@ -142,6 +179,14 @@ public class TestExecutor extends SwingWorker<List<TestResult>, Object> {
         }
     }
 
+    /**
+     * Creates a new internal error with a specified message
+     * and appends it to a list of test results.
+     *
+     * @param testResults A list of test results to append to
+     * @param message Error message
+     * @return A list of test results
+     */
     private List<TestResult> addInternalErrorResult(List<TestResult> testResults, String message) {
         testResults.add(new TestResult(
                 TestResult.Status.INTERNAL_ERROR,

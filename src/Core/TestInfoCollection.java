@@ -7,7 +7,7 @@ import java.util.List;
  * multiple test classes.
  *
  * @author c24nen
- * @version 17.11.25
+ * @version 25.11.17
  */
 public class TestInfoCollection {
     private List<TestInfo> testInfoList;

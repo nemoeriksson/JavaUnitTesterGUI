@@ -9,6 +9,14 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * A class containing the implementation for
+ * handling the "Run" button click for the
+ * unit test program.
+ *
+ * @author c24nen
+ * @version 25.11.17
+ */
 public class RunButtonEvent implements ActionListener {
     private JComboBox<String> searchBar;
     private ContentDisplay contentDisplay;
@@ -20,6 +28,15 @@ public class RunButtonEvent implements ActionListener {
         this.tester = tester;
     }
 
+    // Public methods
+
+    /**
+     * Gets the selected test class from the search
+     * bar and attempts to execute all test methods
+     * for the selected test class.
+     *
+     * @param e The event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String selectedItem = (String) searchBar.getSelectedItem();
@@ -48,6 +65,12 @@ public class RunButtonEvent implements ActionListener {
 
     // Private methods
 
+    /**
+     * Validates that the selected item is a valid test class.
+     *
+     * @param selectedItem Name of test class
+     * @return true if selected item is a valid test class, else false
+     */
     private boolean validateAlternative(String selectedItem) {
         for (int i = 0; i < searchBar.getItemCount(); i++) {
             if (searchBar.getItemAt(i).equals(selectedItem))
@@ -57,6 +80,12 @@ public class RunButtonEvent implements ActionListener {
         return false;
     }
 
+    /**
+     * Displays an error depending on the selected
+     * item. The selected item is assumed invalid.
+     *
+     * @param selectedItem The selected item
+     */
     private void displayError(String selectedItem) {
         if (selectedItem.isEmpty()) {
             contentDisplay.getMessageBox().setMessage(
