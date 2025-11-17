@@ -1,17 +1,24 @@
 package GUI;
 
-import javax.swing.*;
 import java.awt.*;
 
+/**
+ * A class containing information about
+ * different colors. Can be used as a
+ * color scheme.
+ *
+ * @author c24nen
+ * @version 25.11.17
+ */
 public class StyleGuide {
     private Color mainColor = Color.magenta;
     private Color white = Color.white;
     private Color lightGray = Color.lightGray;
     private Color borderColor = Color.lightGray;
 
-    public enum IconType {
-        INFO, SUCCESS, FAILURE, ERROR
-    }
+    /*
+     Getters and setters for the different aspects of the wanted style.
+     */
 
     public void setMainColor(Color c) { mainColor = c; }
     public Color getMainColor() { return mainColor; }

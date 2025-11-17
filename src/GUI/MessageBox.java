@@ -3,6 +3,14 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Class representing a message box to
+ * display different types of messages
+ * in a UI.
+ *
+ * @author c24nen
+ * @version 25.11.17
+ */
 public class MessageBox extends JPanel{
     private final JLabel headerLabel;
     private final JLabel contentLabel;
@@ -21,6 +29,12 @@ public class MessageBox extends JPanel{
 
     // Public methods
 
+    /**
+     * Sets the message box's header and content text.
+     *
+     * @param headerText New header text
+     * @param contentText New content text
+     */
     public void setMessage(String headerText, String contentText) {
         // uses HTML to add line wrapping
         headerLabel.setText(String.format("<html><p>%s</p></html>", headerText));
@@ -29,6 +43,11 @@ public class MessageBox extends JPanel{
 
     // Private methods
 
+    /**
+     * Generates the header label element.
+     *
+     * @return New label
+     */
     private JLabel generateHeaderLabel() {
         JLabel label = new JLabel();
         label.setIconTextGap(8);
@@ -37,6 +56,11 @@ public class MessageBox extends JPanel{
         return label;
     }
 
+    /**
+     * Generates the content label element
+     *
+     * @return New label
+     */
     private JLabel generateContentLabel() {
         JLabel label = new JLabel();
         label.setBorder(BorderFactory.createEmptyBorder(12,12,4,12));
@@ -44,6 +68,13 @@ public class MessageBox extends JPanel{
         return label;
     }
 
+    /**
+     * Generates a container panel according
+     * to the UI's style guide.
+     *
+     * @param style The style guide
+     * @return New panel
+     */
     private JPanel generateContainerPanel(StyleGuide style) {
         JPanel panel = new JPanel();
         panel.setPreferredSize(new Dimension(225, 144));
