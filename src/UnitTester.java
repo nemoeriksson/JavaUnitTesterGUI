@@ -1,3 +1,5 @@
+import Core.ClassParser;
+import GUI.ContentDisplay;
 import GUI.StyleGuide;
 import GUI.Window;
 import Interaction.RunButtonEvent;
@@ -28,6 +30,14 @@ public class UnitTester {
         List<TestInfo> testClassInfoList = new ArrayList<>();
         for (Class<?> testClass : testClasses) {
             testClassInfoList.add(new TestInfo(testClass));
+        }
+
+        if (testClasses.isEmpty()) {
+            GUI.getTestDisplay().showPanel(ContentDisplay.DisplayType.MESSAGE);
+            GUI.getTestDisplay().getMessageBox().setMessage(
+                    "No test classes found",
+                    "Unable to find any test classes at startup. "
+            );
         }
 
         // Setup
