@@ -1,12 +1,13 @@
 package Core;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarInputStream;
 
 /**
  * A utility class for loading test classes from
@@ -24,6 +25,47 @@ public class ClassParser {
     }
 
     // Public methods
+
+    /**
+     * Searches for all example test classes
+     * within the jar file.
+     *
+     * @return A list of test classes
+     */
+    public List<Class<?>> getInternalTestClasses() {
+        List<Class<?>> testClasses = new ArrayList<>();
+
+        try {
+            // Get the location of the current class
+            URL location = getClass().getProtectionDomain().getCodeSource().getLocation();
+            File jarFile = new File(location.toURI());
+
+            if (jarFile.isFile() && jarFile.getName().endsWith(".jar")) {
+                try (JarInputStream jarStream = new JarInputStream(new FileInputStream(jarFile))) {
+                    JarEntry entry;
+
+                    while ((entry = jarStream.getNextJarEntry()) != null) {
+                        String name = entry.getName();
+
+                        // Look for class files in the Examples package
+                        if (name.startsWith("Examples/") && name.endsWith(".class")) {
+                            String className = name.replace('/', '.').replaceAll("\\.class$", "");
+                            Class<?> clazz = classLoader.loadClass(className);
+
+                            if (isTestClass(clazz)) {
+                                testClasses.add(clazz);
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error reading internal test classes: " + e);
+            e.printStackTrace();
+        }
+
+        return testClasses;
+    }
 
     /**
      * Searches for all valid test classes from the
@@ -131,6 +173,19 @@ public class ClassParser {
         if (class_ == null)
             return false;
 
+        return isTestClass(class_);
+    }
+
+    /**
+     * Checks if a given class is a valid test class, i.e. follows
+     * all requirements below:
+     * - Implements the se.umu.cs.unittest.TestClass interface
+     * - Has a constructor without any parameters
+     *
+     * @param class_ The class to validate
+     * @return true if the file represents a valid test class, else false
+     */
+    private boolean isTestClass(Class<?> class_) {
         // Check that the class implements TestClass
         if (!se.umu.cs.unittest.TestClass.class.isAssignableFrom(class_))
             return false;

@@ -37,19 +37,21 @@ public class UnitTester {
         ClassParser classParser = new ClassParser();
         List<Class<?>> testClasses = classParser.getTestClasses();
 
-        List<String> classNames = classParser.getClassNames(testClasses);
-        List<TestInfo> testClassInfoList = new ArrayList<>();
-        for (Class<?> testClass : testClasses) {
-            testClassInfoList.add(new TestInfo(testClass));
-        }
-
-        // Set error message if no test classes are found
+        // Send message about using examples if no classes are found
         if (testClasses.isEmpty()) {
             GUI.getTestDisplay().showPanel(ContentDisplay.DisplayType.MESSAGE);
             GUI.getTestDisplay().getMessageBox().setMessage(
                     "No test classes found",
-                    "Unable to find any test classes at startup. "
+                    "Unable to find any test classes at startup. Using examples."
             );
+
+            testClasses = classParser.getInternalTestClasses();
+        }
+
+        List<String> classNames = classParser.getClassNames(testClasses);
+        List<TestInfo> testClassInfoList = new ArrayList<>();
+        for (Class<?> testClass : testClasses) {
+            testClassInfoList.add(new TestInfo(testClass));
         }
 
         // Interaction setup
