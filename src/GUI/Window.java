@@ -4,7 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Main class for unit tester GUI.
+ * Main class for the unit tester GUI,
+ * contains a header bar and a content
+ * display for result details and
+ * eventual error messages.
  *
  * @author c24nen
  * @version 25.11.17
