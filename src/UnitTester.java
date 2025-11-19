@@ -39,8 +39,8 @@ public class UnitTester {
 
         // Send message about using examples if no classes are found
         if (testClasses.isEmpty()) {
-            GUI.getTestDisplay().showPanel(ContentDisplay.DisplayType.MESSAGE);
-            GUI.getTestDisplay().getMessageBox().setMessage(
+            GUI.getContentDisplay().showPanel(ContentDisplay.DisplayType.MESSAGE);
+            GUI.getContentDisplay().getMessageBox().setMessage(
                     "No test classes found",
                     "Unable to find any test classes at startup. Using examples."
             );
@@ -58,7 +58,7 @@ public class UnitTester {
         RunButtonEvent runButtonEvent = new RunButtonEvent(
                 new TestInfoCollection(testClassInfoList),
                 GUI.getHeader(),
-                GUI.getTestDisplay()
+                GUI.getContentDisplay()
         );
 
         GUI.getHeader().setSearchBarAlternatives(classNames);

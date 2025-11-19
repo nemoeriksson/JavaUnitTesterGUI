@@ -46,5 +46,5 @@ public class Window extends JFrame {
      *
      * @return The UI content display panel
      */
-    public ContentDisplay getTestDisplay() { return mainSection; }
+    public ContentDisplay getContentDisplay() { return mainSection; }
 }
